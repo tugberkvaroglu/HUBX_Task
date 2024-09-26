@@ -1,0 +1,20 @@
+Explanation of the Code:
+
+    Data Preparation:
+        transforms.Compose: Pre-process images by resizing them, applying random horizontal flips (augmentation), converting them to tensors, and normalizing.
+        datasets.ImageFolder: Loads the images into folders corresponding to your labels (e.g., artifact bodies, normal bodies, artifact hands, normal hands).
+        DataLoader: Prepares batches of images for training.
+
+    Model:
+        A pre-trained ResNet18 model is used, and its fully connected layer is replaced with a new one that has two output units (binary classification: artifact vs. normal).
+
+    Training:
+        The train_model function trains the model using binary cross-entropy loss (nn.CrossEntropyLoss), Adam optimizer, and learning rate scheduler.
+        Dropout layers are already integrated into ResNet18 to handle regularization.
+
+    Evaluation:
+        The evaluate_model function evaluates the model performance using precision, recall, F1-score, confusion matrix, and ROC-AUC score to assess how well the model detects artifacts.
+
+    Hyperparameters:
+        You can tweak the learning rate, batch size, number of epochs, etc., to optimize performance. For example, increasing the learning rate might speed up training, while adding more epochs may improve accuracy.
+
