@@ -19,32 +19,6 @@ Explanation of the Code:
         You can tweak the learning rate, batch size, number of epochs, etc., to optimize performance. For example, increasing the learning rate might speed up training, while adding more epochs may improve accuracy.
 
 
-
-
-
-# Use random_split to create subsets
-train_dataset, val_dataset, test_dataset = random_split(dataset, [train_size, val_size, test_size], generator=torch.Generator().manual_seed(42))
-
-# Create DataLoaders
-train_loader = DataLoader(train_dataset, batch_size=32, shuffle=True)
-val_loader = DataLoader(val_dataset, batch_size=32, shuffle=False)
-test_loader = DataLoader(test_dataset, batch_size=32, shuffle=False)
-
-# Confirm dataset sizes
-print(f"Train Dataset Size: {len(train_dataset)}")
-print(f"Validation Dataset Size: {len(val_dataset)}")
-print(f"Test Dataset Size: {len(test_dataset)}")
-
-# Model Definition (use pre-trained ResNet50 as an example)
-model = models.resnet50(pretrained=True)
-num_features = model.fc.in_features
-model.fc = nn.Linear(num_features, 2)  # Assuming binary classification (normal, artifact)
-model = model.to(device)
-
-# Define loss function and optimizer
-criterion = nn.CrossEntropyLoss()
-optimizer = torch.optim.Adam(model.parameters(), lr=0.001)
-
 # Training loop
 def train_model(model, train_loader, val_loader, criterion, optimizer, num_epochs=25):
     best_model_wts = copy.deepcopy(model.state_dict())
